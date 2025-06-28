@@ -464,6 +464,19 @@
     body:not(.light-mode) .tarjeta-experimento h3 {
       color: var(--color-acento);
     }
+
+    .contador-visitas {
+      display: flex;
+      align-items: center;   /* Centra verticalmente */
+      justify-content: center; /* Centra horizontalmente */
+      gap: 0.5rem;          /* Espacio entre texto e imagen */
+      margin-top: 1rem;     /* Espacio arriba */
+    }
+
+    .contador-visitas img {
+      vertical-align: middle;
+    }
+
 </style>
 
 </head>
@@ -661,10 +674,11 @@
     <p>Desarrollado por estudiantes de Ingeniería de Software – FIIS sección Y – Física 1 – UNI</p>
     <p>Dedicado a estudiantes de la Universidad Nacional de Ingeniería que busquen comprender y aprender sobre Física.</p>
     <!-- hitwebcounter Code START -->
-    <p>Visitas:
+    <div class="contador-visitas">
+      <span>Visitas:</span>
       <a href="https://www.hitwebcounter.com" target="_blank">
-        <img src="https://hitwebcounter.com/counter/counter.php?page=21004961&style=0024&nbdigits=6&type=page&initCount=0" title="Counter Widget" Alt="Visit counter For Websites"   border="0" /></a>
-    </p>
+        <img src="https://hitwebcounter.com/counter/counter.php?page=21005136&style=0025&nbdigits=6&type=page&initCount=0" title="Counter Widget" Alt="Visit counter For Websites"   border="0" /></a>
+    </div>
   </footer>
 
   <script>
