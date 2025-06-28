@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=5.0, user-scalable=yes" />
+  <title>Física - FIIS</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Modo oscuro llamativo */
+      --color-oscuro-fondo: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+      --color-acento: #00fff7; /* Turquesa brillante */
+      --color-texto: #e0e0e0;
+      --color-boton: #00ffea;
+      --color-caja-fondo: rgba(22, 20, 40, 0.9);
+
+      /* Modo claro conservador */
+      --azul-oscuro: #003049;
+      --azul-intermedio: #005f73;
+      --azul-claro: #94d2bd;
+      --azul-ultra-claro: #caf0f8;
+
+      --color-claro-fondo: #fafafa;
+      --color-claro-texto: #1d1d1d;
+      --color-claro-secundario: #94d2bd;
+      --color-claro-container: #e0f7fa;
+      --color-claro-boton: #003049;
+      --color-titulo-claro: #1c4f65;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .bienvenida {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      position: relative;
+      z-index: 0;
+      padding: 2rem;
+      background: url("imagenes/fondo-oscuro.jpg") center/cover no-repeat;
+      transition: background-image 0.5s ease;
+    }
+
+    body.light-mode .bienvenida {
+      background: url("imagenes/fondo-claro.jpg") center/cover no-repeat;
+    }
+
+    body.light-mode .bienvenida h1,
+    body.light-mode .bienvenida p {
+      color: var(--color-claro-container);
+    }
+
+    .bienvenida::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6); /* oscurece el fondo */
+      z-index: -1;
+    }
+
+    .contenido-bienvenida {
+      max-width: 700px;
+      z-index: 1;
+    }
+
+    .bienvenida h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--color-acento);
+    }
+
+    .bienvenida p {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+    }
+
+    .btn-explorar {
+      padding: 0.8rem 1.6rem;
+      background-color: var(--color-boton);
+      color: black;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 0 10px #00fff7;
+      transition: transform 0.2s;
+    }
+
+    .btn-explorar:hover {
+      transform: scale(1.1);
+      background-color: #fff176;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--color-oscuro-fondo);
+      color: var(--color-texto);
+      font-size: 1.1rem;
+      background-size: 400% 400%;
+      animation: fondoAnimado 15s ease infinite;
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+
+    @keyframes fondoAnimado {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    #exp-contenido {
+        display: none;
+    }
+
+    #libros-contenido {
+        display: none;
+    }
+
+    #simuladores-contenido {
+        display: none;
+    }
+
+    #Practicas-contenido {
+        display: none;
+    }
+
+    body.light-mode {
+      background: var(--color-claro-fondo);
+      color: var(--color-claro-texto);
+    }
+
+    header {
+      background-color: #15002b;
+      box-shadow: 0 0 20px #00fff7;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      animation: fadeInDown 1s ease;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: var(--color-acento);
+    }
+
+    body.light-mode header {
+      background-color: var(--azul-oscuro);
+    }
+
+    body.light-mode header h1 {
+      color: #66bfc0;
+    }
+
+    .navbar {
+      background-color: #1b0030;
+      box-shadow: 0 0 15px rgba(0, 255, 247, 0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      padding: 0.8rem 1.5rem;
+      animation: fadeInDown 1.2s ease;
+    }
+
+    body.light-mode .navbar {
+      background-color: var(--azul-intermedio);
+    }
+
+    .navbar a {
+      color: var(--color-acento);
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform 0.2s, color 0.3s;
+    }
+
+    .navbar a:hover {
+      transform: scale(1.1);
+      color: #fff176;
+    }
+
+    body.light-mode .navbar a {
+      color: white;
+    }
+
+    .toggle-mode {
+      background: var(--color-boton);
+      color: #000;
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 10px #00fff7, 0 0 20px #00fff7 inset;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+
+    body.light-mode .toggle-mode {
+      background: var(--color-claro-boton);
+      color: #fff;
+      border: 1px solid white;
+    }
+
+    .toggle-mode:hover {
+      background-color: #fff176;
+      transform: scale(1.05);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: var(--color-caja-fondo); /* Nuevo fondo morado oscuro */
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      animation: fadeInUp 1.2s ease;
+    }
+
+    body.light-mode .container {
+      background-color: var(--color-claro-container);
+    }
+
+    h2 {
+      color: var(--color-acento);
+      margin-top: 1.5rem;
+    }
+
+    body.light-mode h2,
+    body.light-mode label {
+      color: var(--color-claro-texto);
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 12px;
+      border: 2px solid #444;
+      margin-bottom: 1rem;
+    }
+
+    label, select, button {
+      display: block;
+      margin: 1rem 0 0.5rem;
+    }
+
+    label {
+      color: var(--color-acento);
+      font-weight: bold;
+    }
+
+    select {
+      padding: 0.5rem;
+      border-radius: 5px;
+      background-color: #2e2e4e;
+      color: var(--color-texto);
+    }
+
+    body.light-mode select {
+      background-color: white;
+      color: var(--color-claro-texto);
+    }
+
+    button {
+      padding: 0.6rem 1.2rem;
+      background-color: var(--color-boton);
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    body.light-mode button {
+      background-color: var(--color-claro-boton);
+      color: #fff;
+    }
+
+    button:hover {
+      background-color: #fff176;
+      transform: scale(1.05);
+    }
+
+    #resultado {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background-color: #2d2d3a;
+      border-left: 5px solid var(--color-acento);
+      border-radius: 5px;
+    }
+
+    body.light-mode #resultado {
+      background-color: white;
+      border-left-color: var(--azul-intermedio);
+      color: var(--color-claro-texto);
+    }
+
+    footer {
+      background-color: #1b1b2e;
+      color: #ccc;
+      padding: 2rem;
+      text-align: center;
+      animation: fadeInUp 1.2s ease;
+    }
+
+    body.light-mode footer {
+      background-color: var(--azul-oscuro);
+      color: white;
+    }
+
+    footer h3 {
+      color: var(--color-acento);
+      margin-bottom: 1rem;
+    }
+
+    body.light-mode footer h3 {
+      color: var(--azul-claro);
+    }
+
+    .integrantes {
+      list-style: none;
+      padding: 0;
+    }
+
+    .integrantes li {
+      margin-bottom: 0.5rem;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tarjetas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .tarjeta {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #1e1e2f;
+      border-radius: 16px;
+      padding: 1.5rem;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .tarjeta:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 25px #00fff7;
+    }
+
+    .tarjeta img {
+      max-width: 100%;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .tarjeta h3 {
+      color: var(--color-acento);
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .tarjeta p {
+      font-size: 0.95rem;
+      margin-bottom: 1.2rem;
+      color: #ccc;
+    }
+
+    .btn-card {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      background-color: var(--color-boton);
+      color: black;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .btn-card:hover {
+      background-color: #fff176;
+    }
+
+    body.light-mode .tarjeta {
+      background-color: #e0f7fa;
+      color: var(--color-claro-texto);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    body.light-mode .tarjeta p {
+      color: var(--color-claro-texto);
+    }
+
+    body.light-mode .tarjeta:hover {
+      box-shadow: 0 0 15px var(--color-claro-boton);
+    }
+
+    .tarjeta-experimento {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #e0f7fa;
+      border-radius: 16px;
+      padding: 1.5rem;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .tarjeta-experimento:hover {
+      transform: scale(1.03);
+    }
+
+    .tarjeta-experimento img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .tarjeta-experimento h3 {
+      color: #222;
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .tarjeta-experimento p {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+
+    body:not(.light-mode) .tarjeta-experimento {
+      background-color: #1e1e2f;
+      color: white;
+    }
+
+    body:not(.light-mode) .tarjeta-experimento p {
+      color: #ccc;
+    }
+
+    body:not(.light-mode) .tarjeta-experimento h3 {
+      color: var(--color-acento);
+    }
+</style>
+
+</head>
+<body>
+  <section class="bienvenida">
+    <div class="contenido-bienvenida">
+      <h1 class="animate__animated animate__fadeInDown">⚛️ Bienvenido a Física - FIIS</h1>
+      <p class="animate__animated animate__fadeInUp">Explora el universo de la física con simuladores, libros y experimentos interactivos.</p>
+      <a href="#experimentos" class="btn-explorar animate__animated animate__fadeInUp animate__delay-1s">🔍 Empezar</a>
+    </div>
+  </section>
+
+  <header class="animate__animated animate__fadeInDown">
+    <h1><i class="fas fa-flask"></i> Física - FIIS</h1>
+  </header>
+
+  <nav class="navbar animate__animated animate__fadeInDown">
+    <a href="#">Inicio <i class="fas fa-home"></i></a>
+    <a href="#experimentos">Experimentos <i class="fas fa-flask"></i></a>
+    <a href="#libros">Libros <i class="fas fa-book"></i></a>
+    <a href="#simulaciones">Simulaciones <i class="fas fa-cogs"></i></a>
+    <a href="#Ejercicios">Ejercicios <i class="fa-solid fa-pencil"></i></a>
+    <button class="toggle-mode" onclick="alternarModo()">🌓 Modo Claro/Oscuro</button>
+  </nav>
+
+  <div class="container" id="experimentos">
+  <h2 onclick="mostrarExperimentos()" style="cursor: pointer;">Explora los Experimentos</h2>
+  <p id="exp-descripcion">
+    Realiza algunos experimentos fascinantes que te ayudarán a entender conceptos clave de la física, desde la ley de Newton hasta la teoría de la relatividad.
+  </p>
+
+  <div id="exp-contenido">
+    <div class="tarjetas">
+      <div class="tarjeta-experimento">
+        <img src="imagenes/experimento1.png" alt="Dispersión con prisma">
+        <h3>Dispersión de la luz</h3>
+        <p>Este experimento muestra cómo un rayo de luz blanca se separa en colores al pasar por un prisma de vidrio.</p>
+        <a href="https://youtu.be/XhIUO9aN0iE" class="btn-card" target="_blank">Ver más</a>
+      </div>
+
+      <div class="tarjeta-experimento">
+        <img src="imagenes/experimento2.jpg" alt="Péndulo de Foucault">
+        <h3>Péndulo de Foucault</h3>
+        <p>Demuestra la rotación de la Tierra mediante un péndulo de gran masa que oscila libremente.</p>
+        <a href="https://youtu.be/iZOXOXzbcp8" class="btn-card" target="_blank">Ver más</a>
+      </div>
+
+      <div class="tarjeta-experimento">
+        <img src="imagenes/experimento3.jpg" alt="Bobina de Tesla">
+        <h3>Bobina de Tesla</h3>
+        <p>La bobina de Tesla es un dispositivo que genera altos voltajes y crea espectaculares descargas eléctricas. Permite observar cómo se comportan los campos eléctricos y la ionización del aire.</p>
+        <a href="https://youtu.be/ezxy4yIuXK8" class="btn-card" target="_blank">Ver más</a>
+      </div>
+
+      <div class="tarjeta-experimento">
+        <img src="imagenes/experimento4.jpg" alt="Levitación magnética">
+        <h3>Levitación Magnética</h3>
+        <p>La levitación magnética demuestra cómo un imán puede flotar suspendido en el aire gracias a campos magnéticos que generan fuerzas de repulsión y equilibrio, desafiando la gravedad.</p>
+        <a href="https://youtu.be/4EaBPmZaZ8A" class="btn-card" target="_blank">Ver más</a>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="container" id="libros">
+    <h2 onclick="mostrarLibros()" style="cursor: pointer;">Libros Recomendados</h2>
+    <p>Accede a una selección de libros esenciales para entender los principios de la física. Cada libro está disponible en formato digital para que puedas leerlo en cualquier momento.</p>
+    <div id="libros-contenido">
+        <div class="book-list">
+        <div class="book">
+            <div class="tarjetas">
+
+              <div class="tarjeta">
+                  <img src="imagenes/libro1.png" alt="Portada de libro 1">
+                  <a><h4>Fundamentos de Física</h4></a>
+                  <a href="https://www2.fisica.unlp.edu.ar/materias/fisgenI/T/Libros/Serway-7Ed.pdf" target="_blank" class="btn-card">Serway-7Ed</a>
+              </div>
+
+              <div class="tarjeta">
+                  <img src="imagenes/libro2.png" alt="Portada de libro 2">
+                  <a><h4>Fundamentos de Física Moderna</h4></a>
+                  <a href="https://api.pageplace.de/preview/DT0400.9788429195958_A41836346/preview-9788429195958_A41836346.pdf" target="_blank" class="btn-card">Física para la ciencia y la tecnología</a>
+              </div>
+
+              <div class="tarjeta">
+                  <img src="imagenes/libro3.png" alt="Portada de libro 3">
+                  <a><h4>Física General</h4></a>
+                  <a href="http://www0.unsl.edu.ar/~cornette/FISICA_LQ/Francis%20Sears%2C%20Mark%20Zemansky.pdf" target="_blank" class="btn-card">Física Universitaria, Sears, Zemansky, Young</a>
+              </div>
+
+              <div class="tarjeta">
+                  <img src="imagenes/libro4.png" alt="Portada de libro 4">
+                  <a><h4>Curso de Física Teórica</h4></a>
+                  <a href="https://blog.espol.edu.ec/janjmore/files/2013/11/Curso-de-fisica-teorica-Vol-1-Mecanica.pdf" target="_blank" class="btn-card">Mecánica, Landau y Lifshitz</a>
+              </div>
+
+            </div>
+        </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="container" id="simulaciones">
+    <h2 onclick="mostrarsimulaciones()" style="cursor: pointer;">Simuladores de Experimentos Físicos</h2>
+    <p>Interactúa con simuladores para experimentar con los principios de la física. Desde el péndulo simple y mucho más.</p>
+    <div id="simuladores-contenido">
+        <div class="tarjetas">
+
+          <div class="tarjeta">
+              <img src="imagenes/simulador1.png" alt="Simulador de Péndulo Simple">
+              <a href="https://phet.colorado.edu/sims/html/pendulum-lab/latest/pendulum-lab_all.html?locale=es" target="_blank" class="btn-card">Péndulo Simple</a>
+              <p>Explora cómo es el funcionamiento de un péndulo simple, su oscilación y su energía involucrada!</p>
+          </div>
+
+          <div class="tarjeta">
+              <img src="imagenes/simulador2.png" alt="Simulador de Ondas Sonoras">
+              <a href="https://phet.colorado.edu/sims/html/sound-waves/latest/sound-waves_all.html?locale=es_PE" target="_blank" class="btn-card">Ondas Sonoras</a>
+              <p>Explora cómo se comportan las ondas sonoras bajo diferentes parámetros, como su frecuencia, amplitud, intensidad, etc.!</p>
+          </div>
+
+          <div class="tarjeta">
+              <img src="imagenes/simulador3.png" alt="Simulador de Leyes de Kepler">
+              <a href="https://phet.colorado.edu/sims/html/keplers-laws/latest/keplers-laws_all.html?locale=es_PE" target="_blank" class="btn-card">Leyes de Kepler</a>
+              <p>Aprende cada una de las 3 Leyes de Kepler, individualmente o el conjunto, mediante simulaciones!</p>
+          </div>
+
+          <div class="tarjeta">
+              <img src="imagenes/simulador4.png" alt="Simulador de Ondas">
+              <a href="https://phet.colorado.edu/sims/html/wave-on-a-string/latest/wave-on-a-string_all.html?locale=es" target="_blank" class="btn-card">Ondas</a>
+              <p>Simula el comportamiento de las ondas con parámetros totalmente ajustables!</p>
+          </div>
+
+          <div class="tarjeta">
+              <img src="imagenes/simulador5.png" alt="Simulador de Imanes">
+              <a href="https://phet.colorado.edu/sims/html/magnet-and-compass/latest/magnet-and-compass_all.html?locale=es_PE" target="_blank" class="btn-card">Imán y brújula</a>
+              <p>Explora cómo se relaciona el campo magnético de la Tierra con una barra imantada!</p>
+          </div>
+
+          <div class="tarjeta">
+              <img src="imagenes/simulador6.png" alt="Simulador Energía">
+              <a href="https://phet.colorado.edu/sims/html/magnet-and-compass/latest/magnet-and-compass_all.html?locale=es_PE" target="_blank" class="btn-card">Energía</a>
+              <p>Aprende todo lo relacionado a energías con un simulador muy divertido e interesante!</p>
+          </div>
+
+          <div class="tarjeta">
+              <img src="imagenes/simulador7.png" alt="Simulador de MAS">
+              <a href="https://phet.colorado.edu/sims/html/masses-and-springs/latest/masses-and-springs_all.html?locale=es_PE" target="_blank" class="btn-card">Masas y Resortes</a>
+              <p>Aprende con simulaciones el comportamiento de resortes cuando se le agrega una masa!</p>
+          </div>
+
+          <div class="tarjeta">
+              <img src="imagenes/simulador8.png" alt="Simulador general">
+              <a href="https://phet.colorado.edu/es_PE/simulations/filter?subjects=physics&type=html" target="_blank" class="btn-card">Más simuladores</a>
+              <p>Explora todos los simuladores de física que puedas gracias a Phet!</p>
+          </div>
+
+        </div>
+    </div>
+  </div>
+
+  <div class="container" id="Ejercicios">
+    <h2 onclick="mostrarEjercicios()" style="cursor: pointer;">Ejercicios para practicar</h2>
+    <p>Accede a diferentes tipos de ejercicios de la Facultad de Ingeniería y Sistemas de la Universidad Nacional de Ingeniería, separados por cuatro prácticas calificadas (PC), un examen parcial y un examen final, con un temario igual al orden en cómo se muestran aquí. Cada examen está separado por ejercicios propuestos por diferentes profesores de la facultad y distintas fechas de publicación.</p>
+    <div id="Practicas-contenido">
+        <div class="reading">
+            <div class="tarjetas">
+              <div class="tarjeta">
+                  <h3><a href="https://drive.google.com/drive/folders/1EPra7cPX5OsAqTUzZNG4BH0U5EJH-7le" target="_blank" class="btn-card">PC1</a></h3>
+              </div>
+              <div class="tarjeta">
+                  <h3><a href="https://drive.google.com/drive/folders/1dJfB5pmzzqbeDfXqwmACL2OvDQTg0sVN" target="_blank" class="btn-card">PC2</a></h3>
+              </div>
+              <div class="tarjeta">
+                  <h3><a href="https://drive.google.com/drive/folders/17_umGWpT3BAut3vMZXB8DJ4-nwbve2TD" target="_blank" class="btn-card">Examen Parcial</a></h3>
+              </div>
+              <div class="tarjeta">
+                  <h3><a href="https://drive.google.com/drive/folders/1pOTiEGe0SoXnA_Ml28y5izkOyyDlV5UY" target="_blank" class="btn-card">PC3</a></h3>
+              </div>
+              <div class="tarjeta">
+                  <h3><a href="https://drive.google.com/drive/folders/18teTm05hwq1aIh8UpdPVBEkDhR4dp5rb" target="_blank" class="btn-card">PC4</a></h3>
+              </div>
+              <div class="tarjeta">
+                  <h3><a href="https://drive.google.com/drive/folders/1L_R2gZPtL1xT95TSYJm7G-CdfupTYcIB" target="_blank" class="btn-card">PC5</a></h3>
+              </div>
+              <div class="tarjeta">
+                  <h3><a href="https://drive.google.com/drive/folders/1GBN6t6rudhkhxKVKR4iTy1J30TkA44bW" target="_blank" class="btn-card">Examen Final</a></h3>
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <footer>
+    <h3><i class="fas fa-users"></i> Créditos</h3>
+    <p>Desarrollado por estudiantes de Ingeniería de Software – FIIS sección Y – Física 1 – UNI</p>
+    <p>Dedicado a estudiantes de la Universidad Nacional de Ingeniería que busquen comprender y aprender sobre Física.</p>
+    <!-- hitwebcounter Code START -->
+    <p>Visitas:
+      <a href="https://www.hitwebcounter.com" target="_blank">
+        <img src="https://hitwebcounter.com/counter/counter.php?page=21004961&style=0024&nbdigits=6&type=page&initCount=0" title="Counter Widget" Alt="Visit counter For Websites"   border="0" /></a>
+    </p>
+  </footer>
+
+  <script>
+    function mostrarExperimentos() {
+        const contenido = document.getElementById('exp-contenido');
+
+        const estaOculto = contenido.style.display === "none" || contenido.style.display === "";
+
+        contenido.style.display = estaOculto ? "block" : "none";
+    }
+  </script>
+  <script>
+    function mostrarLibros() {
+        const contenido = document.getElementById('libros-contenido');
+
+        const estaOculto = contenido.style.display === "none" || contenido.style.display === "";
+
+        contenido.style.display = estaOculto ? "block" : "none";
+    }
+  </script>
+  <script>
+    function mostrarsimulaciones() {
+        const contenido = document.getElementById('simuladores-contenido');
+
+        const estaOculto = contenido.style.display === "none" || contenido.style.display === "";
+
+        contenido.style.display = estaOculto ? "block" : "none";
+    }
+  </script>
+  <script>
+    function mostrarEjercicios() {
+        const contenido = document.getElementById('Practicas-contenido');
+
+        const estaOculto = contenido.style.display === "none" || contenido.style.display === "";
+
+        contenido.style.display = estaOculto ? "block" : "none";
+    }
+  </script>
+  <script>
+  // Activar modo claro si fue guardado
+  window.onload = function () {
+    const modo = localStorage.getItem("modo");
+    if (modo === "light") {
+      document.body.classList.add("light-mode");
+    }
+  };
+
+  // Función para alternar y guardar
+  function alternarModo() {
+    const body = document.body;
+    body.classList.toggle("light-mode");
+    const nuevoModo = body.classList.contains("light-mode") ? "light" : "dark";
+    localStorage.setItem("modo", nuevoModo);
+  }
+</script>
+</body>
+</html>
